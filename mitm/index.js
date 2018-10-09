@@ -567,6 +567,10 @@ function handleAttackerAuthCallback(err, lxc, authCtx, attacker)
             debugLog('[Auth] Attacker authenticated');
             let sessionId = uuid.v1(); // assign UUID
 
+            //execute recycling script once an attacker has connected and
+            //authenticated
+            execSync("../arbitrary-recycle-script " + containerID);
+
             // make a session screen output stream
             let screenWriteOutputStream = fs.createWriteStream(
                 path.resolve(config.logging.streamOutput, sessionId + '.gz')
