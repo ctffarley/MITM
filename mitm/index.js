@@ -567,10 +567,6 @@ function handleAttackerAuthCallback(err, lxc, authCtx, attacker)
             debugLog('[Auth] Attacker authenticated');
             let sessionId = uuid.v1(); // assign UUID
 
-            //execute recycling script once an attacker has connected and
-            //authenticated
-            execSync("../arbitrary-recycle-script " + containerID);
-
             // make a session screen output stream
             let screenWriteOutputStream = fs.createWriteStream(
                 path.resolve(config.logging.streamOutput, sessionId + '.gz')
@@ -615,6 +611,10 @@ function handleAttackerAuthCallback(err, lxc, authCtx, attacker)
                 lxc.end();
                 screenWriteGZIP.end(); // end attacker session screen output write stream
                 // Log sign out event
+
+                //execute recycling script once an attacker has connected and
+                //authenticated
+                execSync("../arbitrary-recycle-script " + containerID);
             });
         });
         // Disconnect LXC client when attacker closes window
