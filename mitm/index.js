@@ -614,7 +614,7 @@ function handleAttackerAuthCallback(err, lxc, authCtx, attacker)
 
                 //execute recycling script once an attacker has connected and
                 //authenticated
-                execSync("../arbitrary-recycle-script " + containerID);
+                execSync("/root/scripts/recycle.sh " + containerID);
             });
         });
         // Disconnect LXC client when attacker closes window
